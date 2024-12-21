@@ -10,13 +10,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +33,46 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ucp2.data.entity.Dosen
+import com.example.ucp2.ui.costumwidget.CostumTopAppBar
+import com.example.ucp2.ui.viewmodel.PenyediaViewModel
 import kotlinx.coroutines.launch
+
+@Composable
+fun HomeDsnView(
+    viewModel: HomeViewModel = viewModel(factory = PenyediaViewModel.Factory), 
+    onAddDsn: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    Scaffold(
+        topBar = {
+            CostumTopAppBar(
+                judul = "Daftar Dosen",
+                showBackButton = false,
+                onBack = {},
+                modifier = modifier
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onAddDsn,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Tambah Dosen",
+                )
+            }
+        }
+    ) { innerPadding ->
+        val homeUiState by viewModel.homeUiState.collectAsState()
+
+        BodyHomeDsnView(
+            homeUiState = homeUiState,
+            modifier = Modifier.padding(innerPadding)
+        )
+    }
+}
 
 @Composable
 fun BodyHomeDsnView(
