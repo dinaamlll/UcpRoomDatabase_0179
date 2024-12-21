@@ -2,11 +2,14 @@ package com.example.ucp2.ui.view.dosen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -17,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.ucp2.data.entity.Dosen
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
 
 @Composable
@@ -94,6 +98,30 @@ fun BodyDetailDsn(
                     modifier = Modifier.padding(16.dp)
                 )
             }
+        }
+    }
+}
+@Composable
+fun ItemDetailDsn(
+    modifier: Modifier = Modifier,
+    dosen: Dosen
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            ComponentDetailDsn(judul = "NIDN", isinya = dosen.nidn)
+            Spacer(modifier = Modifier.padding(4.dp))
+            ComponentDetailDsn(judul = "Nama", isinya = dosen.nama)
+            Spacer(modifier = Modifier.padding(4.dp))
+            ComponentDetailDsn(judul = "Jenis Kelamin", isinya = dosen.jenisKelamin)
+            Spacer(modifier = Modifier.padding(4.dp))
         }
     }
 }
