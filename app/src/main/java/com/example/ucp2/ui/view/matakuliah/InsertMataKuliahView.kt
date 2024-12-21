@@ -25,7 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
+import com.example.ucp2.ui.viewmodel.matakuliah.FormErrorState
+import com.example.ucp2.ui.viewmodel.matakuliah.MatakuliahEvent
+import com.example.ucp2.ui.viewmodel.matakuliah.MatakuliahUIState
+import com.example.ucp2.ui.viewmodel.matakuliah.MatakuliahViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -84,7 +89,7 @@ fun InsertMatakuliahView(
 fun InsertBodyMatakuliah(
     modifier: Modifier = Modifier,
     onValueChange: (MatakuliahEvent) -> Unit,
-    uiState: MkUIState,
+    uiState: MatakuliahUIState,
     onClick: () -> Unit
 ) {
     Column(
@@ -121,31 +126,31 @@ fun FormMatakuliah(
     ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = matakuliahEvent.kodeMatakuliah,
+            value = matakuliahEvent.kode,
             onValueChange = {
-                onValueChange(matakuliahEvent.copy(kodeMatakuliah = it))
+                onValueChange(matakuliahEvent.copy(kode = it))
             },
             label = { Text("Kode Matakuliah") },
-            isError = errorState.kodeMatakuliah != null,
+            isError = errorState.kode != null,
             placeholder = { Text("Masukkan kode matakuliah") },
         )
         Text(
-            text = errorState.kodeMatakuliah ?: "",
+            text = errorState.kode ?: "",
             color = Color.Red
         )
 
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = matakuliahEvent.namaMatakuliah,
+            value = matakuliahEvent.nama,
             onValueChange = {
-                onValueChange(matakuliahEvent.copy(namaMatakuliah = it))
+                onValueChange(matakuliahEvent.copy(nama = it))
             },
             label = { Text("Nama Matakuliah") },
-            isError = errorState.namaMatakuliah != null,
+            isError = errorState.nama != null,
             placeholder = { Text("Masukkan nama matakuliah") },
         )
         Text(
-            text = errorState.namaMatakuliah ?: "",
+            text = errorState.nama ?: "",
             color = Color.Red
         )
 
