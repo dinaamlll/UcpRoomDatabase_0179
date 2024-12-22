@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -27,11 +28,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
+import com.example.ucp2.ui.navigation.AlamatNavigasi
 import com.example.ucp2.ui.viewmodel.matakuliah.FormErrorState
 import com.example.ucp2.ui.viewmodel.matakuliah.MatakuliahEvent
 import com.example.ucp2.ui.viewmodel.matakuliah.MatakuliahUIState
 import com.example.ucp2.ui.viewmodel.matakuliah.MatakuliahViewModel
 import kotlinx.coroutines.launch
+
+object DestinasiMatakuliahInsert : AlamatNavigasi {
+    override val route = "matakuliahinsert"
+}
 
 @Composable
 fun InsertMatakuliahView(
@@ -111,6 +117,7 @@ fun InsertBodyMatakuliah(
         }
     }
 }
+
 @Composable
 fun FormMatakuliah(
     matakuliahEvent: MatakuliahEvent = MatakuliahEvent(),
@@ -221,20 +228,24 @@ fun FormMatakuliah(
             text = errorState.jenis ?: "",
             color = Color.Red
         )
+        Spacer(modifier = Modifier.height(16.dp))
 
-        // Dropdown for selecting Dosen Pengampu
         Text(text = "Dosen Pengampu")
-        DropdownMenu(
-            expanded = uiState.isDropdownExpanded,
-            onDismissRequest = { onValueChange(matakuliahEvent.copy(isDropdownExpanded = false)) }
+        Row(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            uiState.dosenList.forEach { dosen ->
-                DropdownMenuItem(
-                    onClick = {
-                        onValueChange(matakuliahEvent.copy(dosenPengampu = dosen))
-                    }
+            semesterOptions.forEach { dosenPengampu ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
                 ) {
-                    Text(text = dosen.nama)
+                    RadioButton(
+                        selected = matakuliahEvent.dosenPengampu == dosenPengampu,
+                        onClick = {
+                            onValueChange(matakuliahEvent.copy(dosenPengampu = dosenPengampu))
+                        },
+                    )
+                    Text(text = dosenPengampu)
                 }
             }
         }
@@ -243,4 +254,6 @@ fun FormMatakuliah(
             color = Color.Red
         )
     }
-}
+    }
+
+
