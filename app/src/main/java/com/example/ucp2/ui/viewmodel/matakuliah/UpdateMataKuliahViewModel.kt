@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ucp2.data.entity.MataKuliah
 import com.example.ucp2.repository.RepositoryMataKuliah
-import com.example.ucp2.ui.viewmodel.dosen.FormErrrorState
+import com.example.ucp2.ui.navigation.DestinasiUpdate
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -18,11 +18,11 @@ class UpdateMatakuliahViewModel(
     private val repositoryMatakuliah: RepositoryMataKuliah
 ) : ViewModel() {
     var updateUIState by mutableStateOf(MatakuliahUIState())
-    private val _kodeMatakuliah: String = checkNotNull(savedStateHandle[DestinasiUpdate.KODE_MATAKULIAH])
+    private val _kode: String = checkNotNull(savedStateHandle[DestinasiUpdate.KODE])
 
     init {
         viewModelScope.launch {
-            updateUIState = repositoryMatakuliah.getMataKuliah(_kodeMatakuliah)
+            updateUIState = repositoryMatakuliah.getMataKuliah(_kode)
                 .filterNotNull()
                 .first()
                 .toUIStateMatakuliah()
@@ -37,7 +37,7 @@ class UpdateMatakuliahViewModel(
 
     fun validateFields(): Boolean {
         val event = updateUIState.matakuliahEvent
-        val errorState = FormErrrorState(
+        val errorState = FormErrorState(
             kode = if (event.kode.isNotEmpty()) null else "Kode Matakuliah tidak boleh kosong",
             nama = if (event.nama.isNotEmpty()) null else "Nama tidak boleh kosong",
             sks = if (event.sks.isNotEmpty()) null else "SKS tidak boleh kosong",
@@ -52,11 +52,11 @@ class UpdateMatakuliahViewModel(
         if (validateFields()) {
             viewModelScope.launch {
                 try {
-                    repositoryMatakuliah.updateMatakuliah(currentEvent.toMatakuliahEntity())
+                    repositoryMatakuliah.updateMataKuliah(currentEvent.toMatakuliahEntity())
                     updateUIState = updateUIState.copy(
                         snackBarMessage = "Data berhasil diupdate",
                         matakuliahEvent = MatakuliahEvent(),
-                        isEntryValid = FormErrrorState()
+                        isEntryValid= FormErrorState()
                     )
                     println("snackBarMessage diatur: ${updateUIState.snackBarMessage}")
                 } catch (e: Exception) {
