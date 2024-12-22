@@ -17,6 +17,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,13 +29,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.data.entity.MataKuliah
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
 import com.example.ucp2.ui.viewmodel.PenyediaViewModel
+import com.example.ucp2.ui.viewmodel.matakuliah.DetailMatakuliahViewModel
+import com.example.ucp2.ui.viewmodel.matakuliah.DetailUiState
+import com.example.ucp2.ui.viewmodel.matakuliah.toMatakuliahEntity
 
 @Composable
 fun DetailMatakuliahView(
     modifier: Modifier = Modifier,
-    viewModel: DetailMatakuliahViewModel = viewModel(factory = PenyediaViewModel.Factory),
+    viewModel: DetailMatakuliahViewModel = androidx.lifecycle.viewmodel.compose.viewModel(factory =  PenyediaViewModel.Factory),
     onBack: () -> Unit = {},
-    onCreateClick: () -> Unit = {} // Changed onEditClick to onCreateClick
+    onEditClick: (String) -> Unit = {},
+    onDeleteClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -46,22 +52,23 @@ fun DetailMatakuliahView(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = onCreateClick,  // Changed function for creating new Matakuliah
+                onClick = {
+                    onEditClick(viewModel.detailUiState.value.detailUiEvent.kode) },
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.padding(16.dp)
-            ) {
-                Icon(
+            ){
+                Icon (
                     imageVector = Icons.Default.Edit,
-                    contentDescription = "Tambah Matakuliah"  // Updated description
+                    contentDescription = "Edit Mahasiswa",
                 )
             }
         }
     ) { innerPadding ->
-        val detailMatakuliahUiState by viewModel.detailMatakuliahUiState.collectAsState()
+        val detailUiState by viewModel.detailUiState.collectAsState()
 
         BodyDetailMatakuliah(
             modifier = Modifier.padding(innerPadding),
-            detailMatakuliahUiState = detailMatakuliahUiState
+            detailUiState = detailUiState
         )
     }
 }
@@ -69,10 +76,10 @@ fun DetailMatakuliahView(
 @Composable
 fun BodyDetailMatakuliah(
     modifier: Modifier = Modifier,
-    detailMatakuliahUiState: DetailMatakuliahUiState = DetailMatakuliahUiState()
+    detailUiState: DetailUiState = DetailUiState()
 ) {
     when {
-        detailMatakuliahUiState.isLoading -> {
+        detailUiState.isLoading -> {
             Box(
                 modifier = modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -81,20 +88,20 @@ fun BodyDetailMatakuliah(
             }
         }
 
-        detailMatakuliahUiState.isUiEventNotEmpty -> {
+        detailUiState.isUiEventNotEmpty -> {
             Column(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
                 ItemDetailMatakuliah(
-                    matakuliah = detailMatakuliahUiState.detailMatakuliahEvent.toMatakuliahEntity(),
+                    matakuliah = detailUiState.detailUiEvent.toMatakuliahEntity(),
                     modifier = Modifier
                 )
             }
         }
 
-        detailMatakuliahUiState.isUiEventEmpty -> {
+        detailUiState.isUiEventEmpty -> {
             Box(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
