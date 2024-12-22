@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ucp2.data.entity.Dosen
 import com.example.ucp2.repository.RepositoryDsn
-import com.example.ucp2.ui.navigation.DestinasiDetail
+import com.example.ucp2.ui.navigation.DestinasiDosenDetail
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -14,13 +14,14 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 class DetailDsnViewModel(
     savedStateHandle: SavedStateHandle,
     private val repositoryDsn: RepositoryDsn,
 ) : ViewModel() {
-    private val _nidn: String = checkNotNull(savedStateHandle[DestinasiDetail.NIDN])
+
+
+    private val _nidn: String = checkNotNull(savedStateHandle[DestinasiDosenDetail.NIDN])
 
     val detailUiState: StateFlow<DetailUiState> = repositoryDsn.getDosen(_nidn)
         .filterNotNull()
@@ -50,6 +51,7 @@ class DetailDsnViewModel(
                 isLoading = true,
             ),
         )
+}
     data class DetailUiState(
         val detailUiEvent: DosenEvent = DosenEvent(),
         val isLoading: Boolean = false,
@@ -58,6 +60,7 @@ class DetailDsnViewModel(
     ) {
         val isUiEventEmpty: Boolean
             get() = detailUiEvent == DosenEvent()
+
 
         val isUiEventNotEmpty: Boolean
             get() = detailUiEvent != DosenEvent()
@@ -70,5 +73,5 @@ class DetailDsnViewModel(
             jenisKelamin = jenisKelamin
         )
     }
-}
+
 
