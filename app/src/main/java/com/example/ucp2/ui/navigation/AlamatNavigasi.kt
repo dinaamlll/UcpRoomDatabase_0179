@@ -7,6 +7,11 @@ interface AlamatNavigasi {
 object DestinasiHome : AlamatNavigasi {
     override val route = "home"
 }
+object DestinasiDosenDetail : AlamatNavigasi {
+    override val route = "dosendetail"
+    const val NIDN = "nidn"
+    val routesWithArg = "$route/{$NIDN}"
+}
 
 object DestinasiDetail : AlamatNavigasi {
     override val route = "detail"
