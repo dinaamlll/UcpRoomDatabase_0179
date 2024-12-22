@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ucp2.data.entity.MataKuliah
 import com.example.ucp2.repository.RepositoryMataKuliah
-import com.example.ucp2.ui.navigation.DestinasiDetail
+import com.example.ucp2.ui.navigation.DestinasiMatakuliahDetail
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +22,7 @@ class DetailMatakuliahViewModel(
     private val repositoryMatakuliah: RepositoryMataKuliah,
 ) : ViewModel() {
     // Extracting the 'kode' from saved state to identify the Matakuliah
-    private val _kode: String = checkNotNull(savedStateHandle[DestinasiDetail.KODE])
+    private val _kode: String = checkNotNull(savedStateHandle[DestinasiMatakuliahDetail.KODE])
 
     // State flow to hold Matakuliah details
     val detailUiState: StateFlow<DetailUiState> = repositoryMatakuliah.getMataKuliah(_kode)
