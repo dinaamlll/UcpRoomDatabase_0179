@@ -26,11 +26,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
-import com.example.ucp2.ui.viewmodel.DosenEvent
-import com.example.ucp2.ui.viewmodel.DosenViewModel
-import com.example.ucp2.ui.viewmodel.DsnUIState
-import com.example.ucp2.ui.viewmodel.FormErrrorState
+import com.example.ucp2.ui.viewmodel.dosen.DosenEvent
+import com.example.ucp2.ui.viewmodel.dosen.DosenViewModel
+import com.example.ucp2.ui.viewmodel.dosen.DsnUIState
 import com.example.ucp2.ui.viewmodel.PenyediaViewModel
+import com.example.ucp2.ui.viewmodel.dosen.FormErrorState
+
+
 import kotlinx.coroutines.launch
 
 @Composable
@@ -114,7 +116,7 @@ fun InsertBodyDsn(
 fun FormDosen(
     dosenEvent: DosenEvent = DosenEvent(),
     onValueChange: (DosenEvent) -> Unit,
-    errorState: FormErrrorState = FormErrrorState(),
+    errorState: FormErrorState = FormErrorState(),
     modifier: Modifier =  Modifier
 ) {
     val jenisKelamin = listOf("Laki-laki", "Perempuan")
