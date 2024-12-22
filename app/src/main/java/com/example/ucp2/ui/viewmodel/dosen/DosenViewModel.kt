@@ -1,4 +1,4 @@
-package com.example.ucp2.ui.viewmodel
+package com.example.ucp2.ui.viewmodel.dosen
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,7 +23,7 @@ class DosenViewModel(
     private fun validateFields(): Boolean {
         val event = uiState.dosenEvent
         val errrorState = FormErrrorState(
-            nidn = if (event.nidn.isNotEmpty()) null else "NIM tidak boleh kosong",
+            nidn = if (event.nidn.isNotEmpty()) null else "NIDN tidak boleh kosong",
             nama = if (event.nama.isNotEmpty()) null else "Nama tidak boleh kosong",
             jenisKelamin = if (event.jenisKelamin.isNotEmpty()) null else "Jenis Kelamin tidak boleh kosong"
         )
