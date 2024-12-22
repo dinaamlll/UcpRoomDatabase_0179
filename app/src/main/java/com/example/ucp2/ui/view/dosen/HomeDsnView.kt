@@ -25,6 +25,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -32,15 +34,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.data.entity.Dosen
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
 import com.example.ucp2.ui.viewmodel.PenyediaViewModel
+import com.example.ucp2.ui.viewmodel.dosen.HomeDsnViewModel
+import com.example.ucp2.ui.viewmodel.dosen.HomeUiState
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomeDsnView(
-    viewModel: HomeViewModel = viewModel(factory = PenyediaViewModel.Factory), 
+    viewModel: HomeDsnViewModel = viewModel(factory = PenyediaViewModel.Factory),
     onAddDsn: () -> Unit = {},
+    onDetailClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -69,6 +75,10 @@ fun HomeDsnView(
 
         BodyHomeDsnView(
             homeUiState = homeUiState,
+            onClick = {
+                onDetailClick(it)
+                println(it)
+            },
             modifier = Modifier.padding(innerPadding)
         )
     }
@@ -77,6 +87,7 @@ fun HomeDsnView(
 @Composable
 fun BodyHomeDsnView(
     homeUiState: HomeUiState,
+    onClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -101,7 +112,7 @@ fun BodyHomeDsnView(
             }
         }
 
-        homeUiState.listDsn.isEmpty() -> {
+        homeUiState.listDosen.isEmpty() -> {
             Box(
                 modifier = modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -117,7 +128,12 @@ fun BodyHomeDsnView(
 
         else -> {
             ListDosen(
-                listDsn = homeUiState.listDsn,
+                listDsn = homeUiState.listDosen,
+                onClick = {
+                    onClick (it)
+                    println(it
+                    )
+                },
                 modifier = modifier
             )
         }
@@ -127,7 +143,8 @@ fun BodyHomeDsnView(
 @Composable
 fun ListDosen( //untuk menampilkan daftar dosen
     listDsn: List<Dosen>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (String) -> Unit = { }
 ) {
     LazyColumn(
         modifier = modifier
