@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
+import com.example.ucp2.ui.navigation.AlamatNavigasi
 import com.example.ucp2.ui.viewmodel.dosen.DosenEvent
 import com.example.ucp2.ui.viewmodel.dosen.DosenViewModel
 import com.example.ucp2.ui.viewmodel.dosen.DsnUIState
@@ -35,6 +36,9 @@ import com.example.ucp2.ui.viewmodel.dosen.FormErrorState
 
 import kotlinx.coroutines.launch
 
+object DestinasiDosenInsert : AlamatNavigasi {
+    override val route = "insert_dsn"
+}
 @Composable
 fun InsertDsnView(
     onBack: ()->Unit,
