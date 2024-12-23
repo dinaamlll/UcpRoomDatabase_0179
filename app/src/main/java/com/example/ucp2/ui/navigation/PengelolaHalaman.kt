@@ -8,9 +8,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.ucp2.ui.view.dosen.DestinasiDosenInsert
 import com.example.ucp2.ui.view.dosen.DetailDsnView
 import com.example.ucp2.ui.view.dosen.HomeDsnView
 import com.example.ucp2.ui.view.dosen.InsertDsnView
+import com.example.ucp2.ui.view.home.HomeView
 import com.example.ucp2.ui.view.matakuliah.DestinasiMatakuliahInsert
 import com.example.ucp2.ui.view.matakuliah.DetailMatakuliahView
 import com.example.ucp2.ui.view.matakuliah.HomeMatakuliahView
@@ -42,18 +44,18 @@ fun PengelolaHalaman(
             HomeDsnView(
                 onDetailClick = { nidn ->
                     navController.navigate("${DestinasiDosenDetail.route}/$nidn")
-                    println(
-                        "PengelolaHalaman: nidn = $nidn"
-                    )
+                    println("PengelolaHalaman = $nidn")
                 },
+                onBack = { navController.popBackStack() },
                 onAddDsn = {
-                    navController.navigate(DestinasiDosen.route)
+                    navController.navigate(DestinasiDosenInsert.route)
                 },
                 modifier = modifier
             )
         }
 
-        composable(route = "dosen/create") {
+
+        composable(route = DestinasiDosenInsert.route) {
             InsertDsnView(
                 onBack = { navController.popBackStack() },
                 onNavigate = { navController.popBackStack() },
@@ -102,7 +104,7 @@ fun PengelolaHalaman(
                 modifier = modifier
             )
         }
-
+// Detail Matakuliah
         composable(
             DestinasiMatakuliahDetail.routesWithArg,
             arguments = listOf(
@@ -110,15 +112,13 @@ fun PengelolaHalaman(
             )
         ) {
             val kode = it.arguments?.getString("kode")
-            kode?.let {kode->
+            kode?.let { kode ->
                 DetailMatakuliahView(
                     onBack = { navController.popBackStack() },
                     onEditClick = {
                         navController.navigate("matakuliah/update/$kode")
                     },
-                    onCreateClick = {
-                        navController.navigate("matakuliah/delete/$kode")
-                    },
+                    onDeleteClick = { navController.popBackStack() },
                     modifier = modifier
                 )
             }
@@ -133,18 +133,6 @@ fun PengelolaHalaman(
             UpdateMatakuliahView(
                 onBack = { navController.popBackStack() },
                 onNavigate = { navController.popBackStack() },
-                modifier = modifier
-            )
-        }
-
-        composable(
-            route = "matakuliah/delete/{kode}",
-            arguments = listOf(
-                navArgument("kode") { type = NavType.StringType }
-            )
-        ) {
-            DeleteMatakuliahView(
-                onBack = { navController.popBackStack() },
                 modifier = modifier
             )
         }
