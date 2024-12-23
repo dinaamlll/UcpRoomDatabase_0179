@@ -54,8 +54,8 @@ fun HomeDsnView(
         topBar = {
             CostumTopAppBar(
                 judul = "Daftar Dosen",
-                showBackButton = false,
-                onBack = {},
+                showBackButton = true,
+                onBack = onBack,
                 modifier = modifier
             )
         },
