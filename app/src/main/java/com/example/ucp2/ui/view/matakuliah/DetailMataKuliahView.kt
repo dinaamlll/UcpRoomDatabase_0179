@@ -74,10 +74,16 @@ fun DetailMatakuliahView(
 
         BodyDetailMatakuliah(
             modifier = Modifier.padding(innerPadding),
-            detailUiState = detailUiState
+            detailUiState = detailUiState,
+            onDeleteClick = {
+                viewModel.deleteMataKuliah()
+                onDeleteClick()
+            }
         )
     }
 }
+
+
 
 @Composable
 fun BodyDetailMatakuliah(
