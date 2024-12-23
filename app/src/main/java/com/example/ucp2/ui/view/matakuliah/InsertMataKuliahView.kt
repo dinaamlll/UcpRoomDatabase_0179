@@ -33,6 +33,7 @@ import com.example.ucp2.ui.viewmodel.matakuliah.FormErrorState
 import com.example.ucp2.ui.viewmodel.matakuliah.MatakuliahEvent
 import com.example.ucp2.ui.viewmodel.matakuliah.MatakuliahUIState
 import com.example.ucp2.ui.viewmodel.matakuliah.MatakuliahViewModel
+import com.example.ucp2.ui.viewmodel.matakuliah.PenyediaMataKuliahViewModel
 import kotlinx.coroutines.launch
 
 object DestinasiMatakuliahInsert : AlamatNavigasi {
@@ -44,7 +45,7 @@ fun InsertMatakuliahView(
     onBack: () -> Unit,
     onNavigate: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: MatakuliahViewModel = viewModel()
+    viewModel: MatakuliahViewModel = viewModel(factory = PenyediaMataKuliahViewModel.Factory)
 ) {
     val uiState = viewModel.uiState
     val snackbarHostState = remember { SnackbarHostState() }
