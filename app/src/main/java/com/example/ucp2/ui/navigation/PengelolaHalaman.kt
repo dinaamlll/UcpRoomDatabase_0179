@@ -116,7 +116,7 @@ fun PengelolaHalaman(
                 DetailMatakuliahView(
                     onBack = { navController.popBackStack() },
                     onEditClick = {
-                        navController.navigate("matakuliah/update/$kode")
+                        navController.navigate("${DestinasiMatakuliahUpdate.route}/$it")
                     },
                     onDeleteClick = { navController.popBackStack() },
                     modifier = modifier
