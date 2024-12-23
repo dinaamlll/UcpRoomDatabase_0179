@@ -8,7 +8,7 @@ object DestinasiHome : AlamatNavigasi {
     override val route = "home"
 }
 object DestinasiDosen : AlamatNavigasi {
-    override val route = "dosen"
+    override val route = "homedosen"
 }
 object DestinasiDosenDetail : AlamatNavigasi {
     override val route = "dosendetail"
@@ -16,7 +16,7 @@ object DestinasiDosenDetail : AlamatNavigasi {
     val routesWithArg = "$route/{$NIDN}"
 }
 object DestinasiMatakuliah : AlamatNavigasi {
-    override val route = "matakuliah"
+    override val route = "homematakuliah"
 }
 
 object DestinasiMatakuliahDetail : AlamatNavigasi {
