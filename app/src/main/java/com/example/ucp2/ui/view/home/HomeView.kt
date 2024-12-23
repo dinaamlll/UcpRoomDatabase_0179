@@ -49,10 +49,10 @@ fun HomeView(
     onMataKuliahClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // State for animation control
+
     var isVisible by remember { mutableStateOf(false) }
 
-    // Trigger animation when the view is loaded
+
     LaunchedEffect(Unit) {
         isVisible = true
     }
@@ -61,19 +61,19 @@ fun HomeView(
         modifier = modifier
             .fillMaxSize()
             .background(Color(0xFFF2F2F2))
-            .padding(16.dp) // Added padding for better layout spacing
+            .padding(16.dp)
     ) {
         // Main content
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 20.dp), // Add top padding for better spacing
+                .padding(top = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            // Logo and welcome message with label inside a box
+
             TampilanHeader()
-            Spacer(modifier = Modifier.height(40.dp)) // Increased space between box and buttons
+            Spacer(modifier = Modifier.height(40.dp))
 
             Text(
                 text = "Kelola Menu",
@@ -107,16 +107,18 @@ fun HomeView(
                     .fillMaxWidth()
                     .background(Color(0xFF2196F3))
                     .padding(20.dp)
-                    .shadow(4.dp, RoundedCornerShape(12.dp)) // Added shadow for elevation effect
+                    .shadow(4.dp, RoundedCornerShape(12.dp))
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    // Logo Box
+
                     Box(
                         contentAlignment = Alignment.BottomEnd,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 16.dp)
                     ) {
                         Image(
                             painter = painterResource(R.drawable.logo),
@@ -170,7 +172,7 @@ fun HomeView(
                     .shadow(
                         8.dp,
                         RoundedCornerShape(50.dp)
-                    ) // Added shadow for better visual appeal
+                    )
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -189,7 +191,7 @@ fun HomeView(
                         text = text,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.animateScale(isPressed) // Button scale effect on press
+                        modifier = Modifier.animateScale(isPressed)
                     )
                 }
             }
