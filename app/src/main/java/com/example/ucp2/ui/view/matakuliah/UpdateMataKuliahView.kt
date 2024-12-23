@@ -15,7 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
-import com.example.ucp2.ui.viewmodel.PenyediaViewModel
+import com.example.ucp2.ui.viewmodel.matakuliah.PenyediaMataKuliahViewModel
+import com.example.ucp2.ui.viewmodel.matakuliah.UpdateMatakuliahViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ fun UpdateMatakuliahView(
     onBack: () -> Unit,
     onNavigate: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: UpdateMatakuliahViewModel = viewModel(factory = PenyediaViewModel.Factory)
+    viewModel: UpdateMatakuliahViewModel = viewModel(factory = PenyediaMataKuliahViewModel.Factory)
 ) {
     val uiState = viewModel.updateUIState // Get UI state from the ViewModel
     val snackbarHostState = remember { SnackbarHostState() }
