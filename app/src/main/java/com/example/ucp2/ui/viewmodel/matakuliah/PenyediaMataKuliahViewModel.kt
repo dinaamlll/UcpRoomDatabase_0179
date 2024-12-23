@@ -7,7 +7,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.ucp2.KrsApp
 
-object PenyediaViewModel{
+object PenyediaMataKuliahViewModel{
 
     val Factory = viewModelFactory {
         initializer {
