@@ -17,7 +17,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -73,9 +75,17 @@ fun HomeView(
             TampilanHeader()
             Spacer(modifier = Modifier.height(40.dp)) // Increased space between box and buttons
 
+            Text(
+                text = "Kelola Menu",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.padding(bottom = 20.dp) // Add space between the text and the buttons
+            )
+
             AnimatedButton(
                 text = "Dosen",
-                icon = Icons.Filled.Person,
+                icon = Icons.Filled.AccountCircle,
                 onClick = onDosenClick,
                 buttonColor = Color(0xFF81D4FA)
             )
@@ -83,7 +93,7 @@ fun HomeView(
 
             AnimatedButton(
                 text = "Matakuliah",
-                icon = Icons.Filled.Edit,
+                icon = Icons.Filled.Info,
                 onClick = onMataKuliahClick,
                 buttonColor = Color(0xFF81D4FA)
             )
@@ -153,8 +163,8 @@ fun HomeView(
                 ),
                 shape = RoundedCornerShape(50.dp), // Rounded corners for buttons
                 modifier = Modifier
-                    .padding(horizontal = 12.dp, vertical = 12.dp)
-                    .height(90.dp)
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
+                    .height(60.dp)
                     .fillMaxWidth(0.9f)
                     .clickable { isPressed = !isPressed }
                     .shadow(
@@ -172,12 +182,12 @@ fun HomeView(
                         contentDescription = null,
                         modifier = Modifier
                             .padding(end = 8.dp)
-                            .size(50.dp),
+                            .size(40.dp),
                         tint = Color.White
                     )
                     Text(
                         text = text,
-                        fontSize = 24.sp,
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.animateScale(isPressed) // Button scale effect on press
                     )
