@@ -83,6 +83,7 @@ fun MataKuliah.toDetailUiEvent(): MatakuliahEvent {
         nama = nama,
         sks = sks,
         semester = semester,
+        jenis =jenis,
         dosenPengampu = dosenPengampu
     )
 }
