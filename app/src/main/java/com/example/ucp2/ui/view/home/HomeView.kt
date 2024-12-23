@@ -50,3 +50,18 @@ fun HomeView(
             TampilanHeadedr()
             Spacer(modifier = Modifier.height(40.dp)) // Increased space between box and buttons
 
+            AnimatedButton(
+                text = "Dosen",
+                icon = Icons.Filled.Person,
+                onClick = onDosenClick,
+                buttonColor = Color(0xFF81D4FA)
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+
+            AnimatedButton(
+                text = "Matakuliah",
+                icon = Icons.Filled.Edit,
+                onClick = onMataKuliahClick,
+                buttonColor = Color(0xFF81D4FA)
+            )
+}
