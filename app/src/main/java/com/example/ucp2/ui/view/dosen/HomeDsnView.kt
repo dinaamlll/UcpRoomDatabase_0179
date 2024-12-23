@@ -37,15 +37,16 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.data.entity.Dosen
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
-import com.example.ucp2.ui.viewmodel.PenyediaViewModel
 import com.example.ucp2.ui.viewmodel.dosen.HomeDsnViewModel
 import com.example.ucp2.ui.viewmodel.dosen.HomeUiState
+import com.example.ucp2.ui.viewmodel.dosen.PenyediaDsnViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomeDsnView(
-    viewModel: HomeDsnViewModel = viewModel(factory = PenyediaViewModel.Factory),
+    viewModel: HomeDsnViewModel = viewModel(factory = PenyediaDsnViewModel.Factory),
     onAddDsn: () -> Unit = {},
+    onBack: () -> Unit,
     onDetailClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
