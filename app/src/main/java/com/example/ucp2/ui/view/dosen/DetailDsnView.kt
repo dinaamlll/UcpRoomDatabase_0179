@@ -17,21 +17,28 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.data.entity.Dosen
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
+import com.example.ucp2.ui.viewmodel.dosen.DetailDsnViewModel
+import com.example.ucp2.ui.viewmodel.dosen.DetailUiState
+import com.example.ucp2.ui.viewmodel.dosen.PenyediaDsnViewModel
+import com.example.ucp2.ui.viewmodel.dosen.toDosenEntity
 
 @Composable
+
 fun DetailDsnView(
     modifier: Modifier = Modifier,
-    viewModel: DetailDsnViewModel = viewModel(factory = PenyediaViewModel.Factory),
-    onBack: () -> Unit = {},
-    onCreateClick: () -> Unit = {} // Ganti onEditClick menjadi onCreateClick
+    viewModel: DetailDsnViewModel = viewModel(factory = PenyediaDsnViewModel.Factory),
+    onBack: () -> Unit= {},
 ) {
     Scaffold(
         topBar = {
@@ -42,34 +49,22 @@ fun DetailDsnView(
                 modifier = modifier
             )
         },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onCreateClick,  // Mengganti fungsi untuk menambah dosen
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "Tambah Dosen"  // Menyesuaikan deskripsi
-                )
-            }
-        }
     ) { innerPadding ->
-        val detailDsnUiState by viewModel.detailDsnUiState.collectAsState()
+        val detailUiState by viewModel.detailUiState.collectAsState()
 
         BodyDetailDsn(
             modifier = Modifier.padding(innerPadding),
-            detailDsnUiState = detailDsnUiState
+            detailUiState = detailUiState
         )
     }
 }
 @Composable
 fun BodyDetailDsn(
     modifier: Modifier = Modifier,
-    detailDsnUiState: DetailDsnUiState = DetailDsnUiState()
+    detailUiState: DetailUiState = DetailUiState(),
 ) {
     when {
-        detailDsnUiState.isLoading -> {
+        detailUiState.isLoading -> {
             Box(
                 modifier = modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -78,20 +73,20 @@ fun BodyDetailDsn(
             }
         }
 
-        detailDsnUiState.isUiEventNotEmpty -> {
+        detailUiState.isUiEventNotEmpty -> {
             Column(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
                 ItemDetailDsn(
-                    dosen = detailDsnUiState.detailDsnEvent.toDosenEntity(),
+                    dosen = detailUiState.detailUiEvent.toDosenEntity(),
                     modifier = Modifier
                 )
             }
         }
 
-        detailDsnUiState.isUiEventEmpty -> {
+        detailUiState.isUiEventEmpty -> {
             Box(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
