@@ -88,6 +88,8 @@ fun HomeView(
                 buttonColor = Color(0xFF81D4FA)
             )
         }
+    }
+}
         @Composable
         fun TampilanHeader() {
             Box(
@@ -191,7 +193,7 @@ fun HomeView(
             )
             return this.then(Modifier.scale(scale))
         }
-    }
-}
+
+
 
 
