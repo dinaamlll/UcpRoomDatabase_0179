@@ -193,8 +193,9 @@ fun CardDsn(
                 Icon(imageVector = Icons.Filled.Home, contentDescription = "")
                 Spacer(modifier = Modifier.padding(4.dp))
                 Text(
-                    text = "NIDN: ${dsn.nidn}",
+                    text = dsn.nidn,
                     fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
                 )
             }
             Row(
@@ -204,8 +205,9 @@ fun CardDsn(
                 Icon(imageVector = Icons.Filled.DateRange, contentDescription = "")
                 Spacer(modifier = Modifier.padding(4.dp))
                 Text(
-                    text = "Jenis Kelamin: ${dsn.jenisKelamin}",
-                    fontWeight = FontWeight.Normal,
+                    text = dsn.jenisKelamin,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
                 )
             }
         }
