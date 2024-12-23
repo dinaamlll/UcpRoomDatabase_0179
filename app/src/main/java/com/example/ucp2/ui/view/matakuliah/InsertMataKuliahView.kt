@@ -126,7 +126,7 @@ fun FormMatakuliah(
     errorState: FormErrorState = FormErrorState(),
     modifier: Modifier = Modifier
 ) {
-    val semesterOptions = listOf("Semester 1", "Semester 2", "Semester 3", "Semester 4")
+    val semesterOptions = listOf("Genap", "Ganjil")
     val jenisOptions = listOf("Wajib", "Pilihan")
 
     Column(
@@ -155,13 +155,13 @@ fun FormMatakuliah(
             },
             label = { Text("Nama Matakuliah") },
             isError = errorState.nama != null,
-            placeholder = { Text("Masukkan nama matakuliah") },
+            placeholder = { Text("Masukkan Nama Matakuliah") },
         )
         Text(
             text = errorState.nama ?: "",
             color = Color.Red
         )
-
+        Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = matakuliahEvent.sks,
@@ -206,7 +206,7 @@ fun FormMatakuliah(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(text = "Jenis")
+        Text(text = "Jenis Matakuliah")
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
