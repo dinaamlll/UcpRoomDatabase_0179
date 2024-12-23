@@ -30,8 +30,8 @@ import com.example.ucp2.ui.navigation.AlamatNavigasi
 import com.example.ucp2.ui.viewmodel.dosen.DosenEvent
 import com.example.ucp2.ui.viewmodel.dosen.DosenViewModel
 import com.example.ucp2.ui.viewmodel.dosen.DsnUIState
-import com.example.ucp2.ui.viewmodel.PenyediaViewModel
 import com.example.ucp2.ui.viewmodel.dosen.FormErrorState
+import com.example.ucp2.ui.viewmodel.dosen.PenyediaDsnViewModel
 
 
 import kotlinx.coroutines.launch
@@ -44,7 +44,7 @@ fun InsertDsnView(
     onBack: ()->Unit,
     onNavigate: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: DosenViewModel = viewModel(factory = PenyediaViewModel.Factory) //
+    viewModel: DosenViewModel = viewModel(factory = PenyediaDsnViewModel.Factory) //
 ){
     val uiState = viewModel.uiState //ambil ui satate dari viewmodel
     val snackbarHostState = remember { SnackbarHostState() } //snackbar state
