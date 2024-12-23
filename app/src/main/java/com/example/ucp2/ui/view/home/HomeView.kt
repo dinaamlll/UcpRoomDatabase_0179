@@ -134,4 +134,64 @@ fun HomeView(
                 }
             }
         }
+        @Composable
+        fun AnimatedButton(
+            text: String,
+            icon: ImageVector,
+            onClick: () -> Unit,
+            buttonColor: Color
+        ) {
+            var isPressed by remember { mutableStateOf(false) }
+
+            Button(
+                onClick = onClick,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = buttonColor,
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(50.dp), // Rounded corners for buttons
+                modifier = Modifier
+                    .padding(horizontal = 12.dp, vertical = 12.dp)
+                    .height(90.dp)
+                    .fillMaxWidth(0.9f)
+                    .clickable { isPressed = !isPressed }
+                    .shadow(
+                        8.dp,
+                        RoundedCornerShape(50.dp)
+                    ) // Added shadow for better visual appeal
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .size(50.dp),
+                        tint = Color.White
+                    )
+                    Text(
+                        text = text,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.animateScale(isPressed) // Button scale effect on press
+                    )
+                }
+            }
+        }
+
+        @Composable
+        fun Modifier.animateScale(isPressed: Boolean): Modifier {
+            val scale by animateFloatAsState(
+                targetValue = if (isPressed) 1.1f else 1.0f,
+                animationSpec = tween(durationMillis = 300)
+            )
+            return this.then(Modifier.scale(scale))
+        }
+    }
+}
+
 
