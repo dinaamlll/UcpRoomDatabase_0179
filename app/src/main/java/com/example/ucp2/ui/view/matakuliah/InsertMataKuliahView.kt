@@ -19,6 +19,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -27,8 +29,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.ucp2.data.entity.Dosen
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
 import com.example.ucp2.ui.navigation.AlamatNavigasi
+import com.example.ucp2.ui.viewmodel.dosen.HomeDsnViewModel
+import com.example.ucp2.ui.viewmodel.dosen.HomeUiState
+import com.example.ucp2.ui.viewmodel.dosen.PenyediaDsnViewModel
 import com.example.ucp2.ui.viewmodel.matakuliah.FormErrorState
 import com.example.ucp2.ui.viewmodel.matakuliah.MatakuliahEvent
 import com.example.ucp2.ui.viewmodel.matakuliah.MatakuliahUIState
@@ -45,12 +51,13 @@ fun InsertMatakuliahView(
     onBack: () -> Unit,
     onNavigate: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: MatakuliahViewModel = viewModel(factory = PenyediaMataKuliahViewModel.Factory)
+    viewModel: MatakuliahViewModel = viewModel(factory = PenyediaMataKuliahViewModel.Factory),
+    viewModelDosen: HomeDsnViewModel = viewModel(factory = PenyediaDsnViewModel.Factory),
 ) {
     val uiState = viewModel.uiState
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-
+    val DaftarDosen by viewModelDosen.homeUiState.collectAsState()
     // Observe snackBarMessage changes
     LaunchedEffect(uiState.snackBarMessage) {
         uiState.snackBarMessage?.let { message ->
@@ -78,6 +85,7 @@ fun InsertMatakuliahView(
             )
             InsertBodyMatakuliah(
                 uiState = uiState,
+                ListDosen = DaftarDosen,
                 onValueChange = { updateEvent ->
                     viewModel.updateState(updateEvent)
                 },
@@ -97,7 +105,8 @@ fun InsertBodyMatakuliah(
     modifier: Modifier = Modifier,
     onValueChange: (MatakuliahEvent) -> Unit,
     uiState: MatakuliahUIState,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    ListDosen: HomeUiState
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -108,7 +117,8 @@ fun InsertBodyMatakuliah(
             matakuliahEvent = uiState.matakuliahEvent,
             onValueChange = onValueChange,
             errorState = uiState.isEntryValid,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            listDosen = ListDosen.listDosen
         )
         Button(
             onClick = onClick,
@@ -124,11 +134,12 @@ fun FormMatakuliah(
     matakuliahEvent: MatakuliahEvent = MatakuliahEvent(),
     onValueChange: (MatakuliahEvent) -> Unit,
     errorState: FormErrorState = FormErrorState(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    listDosen: List<Dosen>
 ) {
     val semesterOptions = listOf("Genap", "Ganjil")
     val jenisOptions = listOf("Wajib", "Pilihan")
-
+    val DaftarDsn = listDosen.map { it.nama }
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -232,29 +243,17 @@ fun FormMatakuliah(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(text = "Dosen Pengampu")
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            semesterOptions.forEach { dosenPengampu ->
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    RadioButton(
-                        selected = matakuliahEvent.dosenPengampu == dosenPengampu,
-                        onClick = {
-                            onValueChange(matakuliahEvent.copy(dosenPengampu = dosenPengampu))
-                        },
-                    )
-                    Text(text = dosenPengampu)
-                }
+        DynamicSelectedTextField(
+            selectedValue = matakuliahEvent.dosenPengampu,
+            options = DaftarDsn,
+            label = "Pilih Dosen Pengampu",
+            onValueChangedEvent = {
+                onValueChange(matakuliahEvent.copy(dosenPengampu = it))
             }
-        }
+        )
         Text(
             text = errorState.dosenPengampu ?: "",
             color = Color.Red
         )
     }
-    }
-
-
+}
