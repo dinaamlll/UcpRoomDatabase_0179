@@ -1,5 +1,6 @@
 package com.example.ucp2.ui.view.matakuliah
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -123,7 +124,8 @@ fun InsertBodyMatakuliah(
         )
         Button(
             onClick = onClick,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
+
         ) {
             Text("Simpan")
         }
@@ -158,7 +160,7 @@ fun FormMatakuliah(
             text = errorState.kode ?: "",
             color = Color.Red
         )
-
+        Spacer(modifier = Modifier.height(4.dp))
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = matakuliahEvent.nama,
@@ -173,7 +175,7 @@ fun FormMatakuliah(
             text = errorState.nama ?: "",
             color = Color.Red
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(4.dp))
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = matakuliahEvent.sks,
@@ -190,7 +192,7 @@ fun FormMatakuliah(
             color = Color.Red
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         Text(text = "Semester")
         Row(
@@ -216,7 +218,7 @@ fun FormMatakuliah(
             color = Color.Red
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         Text(text = "Jenis Matakuliah")
         Row(
@@ -241,7 +243,7 @@ fun FormMatakuliah(
             text = errorState.jenis ?: "",
             color = Color.Red
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         Text(text = "Dosen Pengampu")
         DynamicSelectedTextField(
