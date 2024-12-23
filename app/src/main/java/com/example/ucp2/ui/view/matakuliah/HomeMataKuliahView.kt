@@ -38,14 +38,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.data.entity.MataKuliah
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
-import com.example.ucp2.ui.viewmodel.PenyediaViewModel
 import com.example.ucp2.ui.viewmodel.matakuliah.HomeUiState
 import com.example.ucp2.ui.viewmodel.matakuliah.HomeMatakuliahViewModel
+import com.example.ucp2.ui.viewmodel.matakuliah.PenyediaMataKuliahViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomeMatakuliahView(
-    viewModel: HomeMatakuliahViewModel = viewModel(factory = PenyediaViewModel.Factory),
+    viewModel: HomeMatakuliahViewModel = viewModel(factory = PenyediaMataKuliahViewModel.Factory),
     onAddMatakuliah: () -> Unit = {},
     onBack:()->Unit,
     onDetailClick: (String) -> Unit = {},
