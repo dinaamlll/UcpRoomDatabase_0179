@@ -9,12 +9,16 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucp2.ui.costumwidget.CostumTopAppBar
+import com.example.ucp2.ui.viewmodel.dosen.HomeDsnViewModel
+import com.example.ucp2.ui.viewmodel.dosen.PenyediaDsnViewModel
 import com.example.ucp2.ui.viewmodel.matakuliah.PenyediaMataKuliahViewModel
 import com.example.ucp2.ui.viewmodel.matakuliah.UpdateMatakuliahViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,12 +31,13 @@ fun UpdateMatakuliahView(
     onBack: () -> Unit,
     onNavigate: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: UpdateMatakuliahViewModel = viewModel(factory = PenyediaMataKuliahViewModel.Factory)
+    viewModel: UpdateMatakuliahViewModel = viewModel(factory = PenyediaMataKuliahViewModel.Factory),
+    viewModelDosen: HomeDsnViewModel = viewModel(factory = PenyediaDsnViewModel.Factory),
 ) {
     val uiState = viewModel.updateUIState // Get UI state from the ViewModel
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-
+    val DaftarDosen by viewModelDosen.homeUiState.collectAsState()
     LaunchedEffect(uiState.snackBarMessage) {
         println("LaunchedEffect triggered")
         uiState.snackBarMessage?.let { message ->
@@ -68,6 +73,7 @@ fun UpdateMatakuliahView(
             // Insert body content
             InsertBodyMatakuliah(
                 uiState = uiState,
+                ListDosen = DaftarDosen, //Mengambil daftar dosen dari HomeDsnViewModel dan mengirimkannya ke InsertBodyMatakuliah
                 onValueChange = { updatedEvent ->
                     viewModel.updateState(updatedEvent) // Update state in ViewModel
                 },
